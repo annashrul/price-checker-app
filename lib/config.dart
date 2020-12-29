@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 class Constant{
-  final String baseUrl        = 'http://192.168.100.10:3010/';
+  final String baseUrl        = 'http://ptnetindo.com:6692/';
   final String versionCode    = '0.0.1';
   final String username       = 'netindo';
   final String connection     = 'apps';

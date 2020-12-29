@@ -1,13 +1,16 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:price_checker_app/config.dart';
 
 class WidgetHelper{
+  final formatter = new NumberFormat("#,###");
+
   myModal(BuildContext context,Widget child){
     return showModalBottomSheet(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(0.0))),
-        backgroundColor: Colors.white,
+        backgroundColor: Constant().mainColor,
         context: context,
         isScrollControlled: true,
         builder: (context) => Padding(
@@ -60,5 +63,60 @@ class WidgetHelper{
     )..show(context);
   }
 
+  loadingDialog(BuildContext context,{title='loading ...'}){
+    return showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return ConstrainedBox(
+            constraints: BoxConstraints(maxHeight: 100.0),
+            child: AlertDialog(
+              content: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.grey), semanticsLabel: 'tunggu sebentar', backgroundColor: Colors.black),
+                  SizedBox(width:10.0),
+                  Text(title, style: TextStyle(color:Colors.grey,fontWeight:FontWeight.bold))
+                  // RichText(text: TextSpan(text:'Tunggu Sebentar ...', style: TextStyle(fontWeight:FontWeight.bold,color:Theme.of(context).primaryColorDark, fontSize: 14)))
+                ],
+              ),
+            )
+        );
+      },
+    );
+  }
+
+  notifDialog(BuildContext context,title,desc,Function callback,{txtBtn='Oke'}){
+    return  showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return Center(
+            child: AlertDialog(
+              title:Text('$title'),
+              content:Text('$desc'),
+              actions: <Widget>[
+                FlatButton(
+                  onPressed:callback,
+                  child:Text("$txtBtn"),
+                ),
+              ],
+            ),
+          );
+        }
+    );
+  }
+  loadingWidget(BuildContext context,{title='loading ...'}){
+    return Center(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(Colors.grey), semanticsLabel: 'tunggu sebentar', backgroundColor: Colors.black),
+          SizedBox(width:10.0),
+          Text(title, style: TextStyle(color:Colors.grey,fontWeight:FontWeight.bold))
+        ],
+      ),
+    );
+  }
 
 }

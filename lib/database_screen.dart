@@ -70,7 +70,7 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
                           splashColor: Colors.black,
                           onTap: ()async{
                             await Future.delayed(Duration(milliseconds: 90));
-                            WidgetHelper().myModal(context, ModalTenant(title: 'Database'));
+                            // WidgetHelper().myModal(context, ModalTenant(title: 'Database'));
                           },
                           child: Container(
                             padding: EdgeInsets.all(20.0),
