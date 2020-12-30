@@ -12,14 +12,16 @@ class BaseProvider{
   Client client = Client();
   Future getProvider(url,param,{isTenant=false,isLogin=false})async{
     Map<String, String> head;
-    final repo = Repository();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+
     if(isLogin==true){
+      final repo = Repository();
+      SharedPreferences prefs = await SharedPreferences.getInstance();
       final username  = base64.encode(utf8.encode(prefs.getString("tenant")));
       final token  = await repo.getDataUser("token");
       head={'Authorization':token,'username': username, 'password': Constant().password,'myconnection':Constant().connection};
     }
     if(isTenant==true){
+      SharedPreferences prefs = await SharedPreferences.getInstance();
       final username  = base64.encode(utf8.encode(prefs.getString("tenant")));
       head={'username':username, 'password': Constant().password,'myconnection':Constant().connection};
     }
@@ -30,6 +32,7 @@ class BaseProvider{
       print("HEADER $head");
       print("URL ${Constant().baseUrl}$url");
       final response = await client.get("${Constant().baseUrl}$url", headers:head).timeout(Duration(seconds: Constant().timeout));
+      print("STATUS CODE ${response.statusCode}");
       if (response.statusCode == 200) {
         return param(response.body);
       }
