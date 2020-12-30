@@ -110,11 +110,11 @@ class _ScanScreenState extends State<ScanScreen> {
   }
   void onClickMenu(MenuItemProvider item)async {
     if(item.menuTitle=='Setting'){
-      barcodeFocus.unfocus();
+      // barcodeFocus.unfocus();
       WidgetHelper().myModal(context, TimerModal(callback: (param){
         if(param=='success'){
-          barcodeFocus.requestFocus();
           hideKeyboard(context);
+          barcodeFocus.requestFocus();
         }
       }));
     }
@@ -201,10 +201,121 @@ class _ScanScreenState extends State<ScanScreen> {
       resizeToAvoidBottomInset: true,
       body:GestureDetector(
         onTap: (){
-          print("ontap");
+          print("onTap");
           hideKeyboard(context);
           barcodeFocus.requestFocus();
         },
+        onDoubleTap: (){
+          print("onDoubleTap");
+          hideKeyboard(context);
+          barcodeFocus.requestFocus();
+        },
+        onTapDown: (e){
+          print("onTapDown");
+          hideKeyboard(context);
+          barcodeFocus.requestFocus();
+        },
+        onTapCancel: (){
+          print("onTapCancel");
+          hideKeyboard(context);
+          barcodeFocus.requestFocus();
+        },
+        onForcePressEnd: (e){
+          print("onForcePressEnd");
+          hideKeyboard(context);
+          barcodeFocus.requestFocus();
+        },
+        onForcePressPeak: (e){
+          print("onForcePressPeak");
+          hideKeyboard(context);
+          barcodeFocus.requestFocus();
+        },
+        onForcePressStart: (e){
+          print("onForcePressStart");
+          hideKeyboard(context);
+          barcodeFocus.requestFocus();
+        },
+        onForcePressUpdate: (e){
+          print("onForcePressUpdate");
+          hideKeyboard(context);
+          barcodeFocus.requestFocus();
+        },
+        onHorizontalDragCancel: (){
+          print("onForcePressUpdate");
+          hideKeyboard(context);
+          barcodeFocus.requestFocus();
+        },
+        onHorizontalDragDown: (e){
+          print("onForcePressUpdate");
+          hideKeyboard(context);
+          barcodeFocus.requestFocus();
+        },
+        onHorizontalDragEnd: (e){
+          print("onForcePressUpdate");
+          hideKeyboard(context);
+          barcodeFocus.requestFocus();
+        },
+        onHorizontalDragStart: (e){
+          print("onForcePressUpdate");
+          hideKeyboard(context);
+          barcodeFocus.requestFocus();
+        },
+        onHorizontalDragUpdate: (e){
+          print("onForcePressUpdate");
+          hideKeyboard(context);
+          barcodeFocus.requestFocus();
+        },
+        onLongPress: (){
+          print("onForcePressUpdate");
+          hideKeyboard(context);
+          barcodeFocus.requestFocus();
+        },
+        onLongPressEnd: (e){
+          print("onForcePressUpdate");
+          hideKeyboard(context);
+          barcodeFocus.requestFocus();
+        },
+        onLongPressMoveUpdate: (e){
+          print("onForcePressUpdate");
+          hideKeyboard(context);
+          barcodeFocus.requestFocus();
+        },
+        onLongPressStart: (e){
+          print("onForcePressUpdate");
+          hideKeyboard(context);
+          barcodeFocus.requestFocus();
+        },
+        onLongPressUp: (){
+          print("onForcePressUpdate");
+          hideKeyboard(context);
+          barcodeFocus.requestFocus();
+        },
+        onPanCancel: (){
+          print("onForcePressUpdate");
+          hideKeyboard(context);
+          barcodeFocus.requestFocus();
+        },
+        onPanDown: (e){
+          print("onForcePressUpdate");
+          hideKeyboard(context);
+          barcodeFocus.requestFocus();
+        },
+        onPanEnd: (e){
+          print("onForcePressUpdate");
+          hideKeyboard(context);
+          barcodeFocus.requestFocus();
+        },
+        onPanStart: (e){
+          print("onForcePressUpdate");
+          hideKeyboard(context);
+          barcodeFocus.requestFocus();
+        },
+        onPanUpdate: (e){
+          print("onForcePressUpdate");
+          hideKeyboard(context);
+          barcodeFocus.requestFocus();
+        },
+
         child: RefreshIndicator(
           child:  LayoutBuilder(
             builder: (context, constraints) => ListView(
@@ -247,8 +358,8 @@ class _ScanScreenState extends State<ScanScreen> {
                                   highlightColor: Colors.transparent,
                                   splashColor: Colors.black,
                                   borderRadius: BorderRadius.circular(35.0),
-                                  onTap: (){
-                                    // scanQR();
+                                  onLongPress: (){
+                                    scanQR();
                                   },
                                   child: Image.asset('${Constant().localAssets}scanner.png',height: 220,color: Colors.white),
                                 ),
