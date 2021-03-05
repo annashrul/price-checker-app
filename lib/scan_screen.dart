@@ -15,6 +15,7 @@ import 'package:price_checker_app/model/product_model.dart';
 import 'package:price_checker_app/repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:virtual_keyboard/virtual_keyboard.dart';
+import 'package:wakelock/wakelock.dart';
 import 'dart:ui' as ui;
 import 'config.dart';
 import 'model/general_model.dart';
@@ -161,7 +162,9 @@ class _ScanScreenState extends State<ScanScreen> {
     // TODO: implement initState
     super.initState();
     loadUser();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+    Wakelock.enable();
+    // SystemChannels.textInput.invokeMethod('TextInput.hide');
+    // WidgetsBinding.instance.addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
   }
   Future<void> _refresh() {
     return loadUser();
@@ -200,6 +203,7 @@ class _ScanScreenState extends State<ScanScreen> {
       resizeToAvoidBottomPadding: true,
       resizeToAvoidBottomInset: true,
       body:GestureDetector(
+        // behavior: HitTestBehavior.translucent,
         onTap: (){
           print("onTap");
           hideKeyboard(context);
@@ -365,10 +369,10 @@ class _ScanScreenState extends State<ScanScreen> {
                                 ),
                                 SizedBox(height: 20.0),
                                 Container(
-                                    width:10.0,
+                                    width:400.0,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
-                                        color: Constant().mainColor
+                                        color:Constant().mainColor
                                     ),
                                     child:TextFormField(
                                       cursorColor: Colors.grey[200],
