@@ -206,20 +206,20 @@ class Tambahan {
     this.stock,
   });
 
-  String kdBrg;
-  String barcode;
-  String satuan;
-  int satuanJual;
-  int qtyKonversi;
-  String harga;
-  String lokasi;
-  int ppn;
-  int service;
-  String harga2;
-  String harga3;
-  String harga4;
-  String hargaBeli;
-  String stock;
+  dynamic kdBrg;
+  dynamic barcode;
+  dynamic satuan;
+  dynamic satuanJual;
+  dynamic qtyKonversi;
+  dynamic harga;
+  dynamic lokasi;
+  dynamic ppn;
+  dynamic service;
+  dynamic harga2;
+  dynamic harga3;
+  dynamic harga4;
+  dynamic hargaBeli;
+  dynamic stock;
 
   factory Tambahan.fromJson(Map<String, dynamic> json) => Tambahan(
     kdBrg: json["kd_brg"],

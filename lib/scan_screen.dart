@@ -51,11 +51,12 @@ class _ScanScreenState extends State<ScanScreen> {
     searchProduct(barcodeScanRes);
   }
   Future searchProduct(e)async{
-    // WidgetHelper().loadingWidget(context);
+    WidgetHelper().loadingDialog(context);
     print("=================================== BARCODE HERE ${barcodeController.text} ================================");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.getString("kode_lokasi");
     var res = await BaseProvider().getProvider("barang/get?page=1&searchby=barcode&lokasi=${prefs.getString("kode_lokasi")}&q=$e", productModelFromJson,isLogin: true);
+    // var res = await BaseProvider().getProvider("barang/get?page=1&searchby=barcode&lokasi=${prefs.getString("kode_lokasi")}&q=2109019753", productModelFromJson,isLogin: true);
     setState(() {
       barcodeController.text='';
     });
@@ -84,12 +85,15 @@ class _ScanScreenState extends State<ScanScreen> {
               arrProduct.add(element.toJson());
             });
             WidgetHelper().myPushAndLoad(context,DetailProduct(data: arrProduct),(){
-              hideKeyboard(context);
               print("#################################### ABUS EUY ##################################");
+
+              hideKeyboard(context);
               SystemChannels.textInput.invokeMethod('TextInput.hide');
               barcodeFocus.requestFocus();
-              setState(() {
-              });
+              if(this.mounted){
+                setState(() {});
+
+              }
             });
           }
           else{
@@ -174,7 +178,7 @@ class _ScanScreenState extends State<ScanScreen> {
   @override
   Widget build(BuildContext context) {
     PopupMenu.context = context;
-    // barcodeFocus.requestFocus();
+    barcodeFocus.requestFocus();
     SystemChannels.textInput.invokeMethod('TextInput.hide');
     return Scaffold(
       appBar: AppBar(
@@ -200,7 +204,7 @@ class _ScanScreenState extends State<ScanScreen> {
       ),
       key: _scaffoldKey,
       backgroundColor: Constant().mainColor,
-      resizeToAvoidBottomPadding: true,
+      // resizeToAvoidBottomPadding: true,
       resizeToAvoidBottomInset: true,
       body:GestureDetector(
         // behavior: HitTestBehavior.translucent,
@@ -363,6 +367,7 @@ class _ScanScreenState extends State<ScanScreen> {
                                   splashColor: Colors.black,
                                   borderRadius: BorderRadius.circular(35.0),
                                   onLongPress: (){
+                                    // searchProduct("e");
                                     scanQR();
                                   },
                                   child: Image.asset('${Constant().localAssets}scanner.png',height: 220,color: Colors.white),
@@ -395,7 +400,6 @@ class _ScanScreenState extends State<ScanScreen> {
                                       focusNode: barcodeFocus,
                                       onFieldSubmitted: (e){
                                         print("=================================== onFieldSubmitted : $e");
-                                        WidgetHelper().loadingDialog(context);
                                         searchProduct(e);
                                       },
                                       // onChanged: (e){

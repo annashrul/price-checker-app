@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:price_checker_app/config.dart';
+import 'package:price_checker_app/scan_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'helper_widget.dart';
@@ -36,7 +37,7 @@ class _DetailProductState extends State<DetailProduct> {
       else
         timeUpFlag = true;
       if(timeUpFlag==true){
-        Navigator.pop(context);
+        WidgetHelper().myPush(context,ScanScreen());
       }
     });
   }
@@ -54,11 +55,12 @@ class _DetailProductState extends State<DetailProduct> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    timer.cancel();
+    // timer.cancel();
   }
 
   @override
   Widget build(BuildContext context) {
+    print(widget.data[0]["tambahan"]);
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -66,7 +68,9 @@ class _DetailProductState extends State<DetailProduct> {
         elevation: 0.0,
         actions: [
           InkWell(
-            onTap: ()=>Navigator.pop(context),
+            onTap: (){
+              WidgetHelper().myPush(context,ScanScreen());
+            },
             child: Stack(
               alignment: Alignment.topCenter,
               children: [
@@ -89,7 +93,7 @@ class _DetailProductState extends State<DetailProduct> {
         width: double.infinity,
         child: Text("halaman akan kembali dalam hitungan $timeCounter detik",textAlign: TextAlign.center,style: TextStyle(letterSpacing:3.0,color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20))
       ),
-      resizeToAvoidBottomPadding: true,
+      // resizeToAvoidBottomPadding: true,
       resizeToAvoidBottomInset: true,
       body: Center(
         child: Column(
@@ -117,15 +121,15 @@ class _DetailProductState extends State<DetailProduct> {
                    mainAxisAlignment: MainAxisAlignment.start,
                    crossAxisAlignment: CrossAxisAlignment.start,
                    children: [
-                     tempItem(context,"BARCODE BARANG", widget.data[0]['barcode']),
+                     tempItem(context,"BARCODE BARANG", widget.data[0]["tambahan"][0]['barcode']),
                      Divider(),
-                     tempItem(context,"KODE BARANG", widget.data[0]['kd_brg']),
+                     tempItem(context,"KODE BARANG", widget.data[0]["tambahan"][0]['kd_brg']),
                      Divider(),
                      tempItem(context,"NAMA BARANG", widget.data[0]['nm_brg']),
                      Divider(),
-                     tempItem(context,"SATUAN BARANG", widget.data[0]['satuan']),
+                     tempItem(context,"SATUAN BARANG", widget.data[0]["tambahan"][0]['satuan']),
                      Divider(),
-                     tempItem(context,"HARGA BARANG","Rp ${WidgetHelper().formatter.format(int.parse( widget.data[0]['hrg_jual']))}.-"),
+                     tempItem(context,"HARGA BARANG","Rp ${WidgetHelper().formatter.format(int.parse( widget.data[0]["tambahan"][0]['harga']))}.-"),
                      Divider(),
                      tempItem(context,"KELOMPOK BARANG",widget.data[0]['kel_brg']),
                    ],
