@@ -13,7 +13,7 @@ class Constant{
   final String localAssets    = 'assets/img/';
   final String oneSignalId    = "b1057dd8-ea51-41d2-be3b-a6778ffbf5e4";
   final String fontStyle      = 'Montserrat';
-  final Color mainColor       = Color(0xFF9f8730);
+  final Color mainColor       = Color(0xFF055094);
 
 
 }

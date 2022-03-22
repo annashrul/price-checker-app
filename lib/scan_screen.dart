@@ -156,6 +156,7 @@ class _ScanScreenState extends State<ScanScreen> {
   final repo = Repository();
   Future loadUser()async{
     final foto  = await repo.getDataUser("logo");
+    print(foto);
     setState(() {
       img = foto;
     });
@@ -503,7 +504,7 @@ class _TimerModalState extends State<TimerModal> {
               children: <Widget>[
                 Text(
                   text,
-                  style: Theme.of(context).textTheme.display1,
+                  style: Theme.of(context).textTheme.headline1,
                 ),
                 Divider(),
                 Expanded(

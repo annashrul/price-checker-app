@@ -34,6 +34,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        appBarTheme: AppBarTheme(backgroundColor: Constant().mainColor),
         visualDensity: VisualDensity.adaptivePlatformDensity,
         fontFamily: Constant().fontStyle,
         primaryColor: Constant().mainColor,
@@ -73,6 +74,9 @@ class _SplashScreenState extends State<SplashScreen> {
       WidgetHelper().myPushRemove(context, AuthScreen());
     }
     if(tenant!=null&&lokasi!=null){
+      // WidgetHelper().myPushRemove(context, TenantScreen());
+
+      // WidgetHelper().myPushRemove(context, AuthScreen());
       WidgetHelper().myPushRemove(context, ScanScreen());
     }
   }
