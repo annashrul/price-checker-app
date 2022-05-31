@@ -56,23 +56,27 @@ class _ScanScreenState extends State<ScanScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.getString("kode_lokasi");
     var res = await BaseProvider().getProvider("barang/get?page=1&searchby=barcode&lokasi=${prefs.getString("kode_lokasi")}&q=$e", productModelFromJson,isLogin: true);
-    // var res = await BaseProvider().getProvider("barang/get?page=1&searchby=barcode&lokasi=${prefs.getString("kode_lokasi")}&q=2109019753", productModelFromJson,isLogin: true);
-    setState(() {
-      barcodeController.text='';
-    });
+
     Navigator.pop(context);
     if(res==Constant().errTimeout||res==Constant().errSocket){
       WidgetHelper().notifBar(context,"failed", 'no connection available');
+      hideKeyboard(context);
+      SystemChannels.textInput.invokeMethod('TextInput.hide');
+      barcodeFocus.requestFocus();
     }
     else if(res=='400'){
       WidgetHelper().notifBar(context,"failed", 'Product not found');
+
       hideKeyboard(context);
+      SystemChannels.textInput.invokeMethod('TextInput.hide');
       barcodeFocus.requestFocus();
     }
     else{
       if(res is General){
         WidgetHelper().notifBar(context,"failed", 'Product not found');
+
         hideKeyboard(context);
+        SystemChannels.textInput.invokeMethod('TextInput.hide');
         barcodeFocus.requestFocus();
       }
       else{
@@ -98,11 +102,22 @@ class _ScanScreenState extends State<ScanScreen> {
           }
           else{
             WidgetHelper().notifBar(context,"failed", 'Product Not Found');
+            hideKeyboard(context);
+            SystemChannels.textInput.invokeMethod('TextInput.hide');
+            barcodeFocus.requestFocus();
+            if(this.mounted){
+              setState(() {});
+
+            }
           }
         }
 
       }
     }
+
+    setState(() {
+      barcodeController.text='';
+    });
   }
   void hideKeyboard(BuildContext context) {
     FocusScopeNode currentFocus = FocusScope.of(context);
@@ -113,6 +128,8 @@ class _ScanScreenState extends State<ScanScreen> {
   void stateChanged(bool isShow) {
     print('menu is ${isShow ? 'showing' : 'closed'}');
   }
+
+  bool isShowImg=true;
   void onClickMenu(MenuItemProvider item)async {
     if(item.menuTitle=='Setting'){
       // barcodeFocus.unfocus();
@@ -123,10 +140,14 @@ class _ScanScreenState extends State<ScanScreen> {
         }
       }));
     }
-    else{
+    else if(item.menuTitle == 'Exit'){
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.remove("kode_lokasi");
       WidgetHelper().myPushRemove(context,AuthScreen());
+    }
+    else{
+      isShowImg=!isShowImg;
+      setState(() {});
     }
   }
   void onDismiss() {
@@ -134,7 +155,7 @@ class _ScanScreenState extends State<ScanScreen> {
   }
   void maxColumn() {
     PopupMenu menu = PopupMenu(
-        maxColumn: 2,
+        maxColumn: 3,
         items: [
           MenuItem(
               title: 'Exit',
@@ -144,6 +165,10 @@ class _ScanScreenState extends State<ScanScreen> {
               title: 'Setting',
               image: Icon(Icons.settings, color: Colors.white,)
           ),
+          MenuItem(
+              title: "${isShowImg?'Hide':'Show'} Logo",
+              image: Icon(Icons.album, color: Colors.white,)
+          )
 
         ],
         onClickMenu: onClickMenu,
@@ -183,6 +208,7 @@ class _ScanScreenState extends State<ScanScreen> {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         elevation: 0.0,
         actions: [
           Stack(
@@ -250,77 +276,77 @@ class _ScanScreenState extends State<ScanScreen> {
           barcodeFocus.requestFocus();
         },
         onHorizontalDragCancel: (){
-          print("onForcePressUpdate");
+          print("onHorizontalDragCancel");
           hideKeyboard(context);
           barcodeFocus.requestFocus();
         },
         onHorizontalDragDown: (e){
-          print("onForcePressUpdate");
+          print("onHorizontalDragDown");
           hideKeyboard(context);
           barcodeFocus.requestFocus();
         },
         onHorizontalDragEnd: (e){
-          print("onForcePressUpdate");
+          print("onHorizontalDragEnd");
           hideKeyboard(context);
           barcodeFocus.requestFocus();
         },
         onHorizontalDragStart: (e){
-          print("onForcePressUpdate");
+          print("onHorizontalDragStart");
           hideKeyboard(context);
           barcodeFocus.requestFocus();
         },
         onHorizontalDragUpdate: (e){
-          print("onForcePressUpdate");
+          print("onHorizontalDragUpdate");
           hideKeyboard(context);
           barcodeFocus.requestFocus();
         },
         onLongPress: (){
-          print("onForcePressUpdate");
+          print("onLongPress");
           hideKeyboard(context);
           barcodeFocus.requestFocus();
         },
         onLongPressEnd: (e){
-          print("onForcePressUpdate");
+          print("onLongPressEnd");
           hideKeyboard(context);
           barcodeFocus.requestFocus();
         },
         onLongPressMoveUpdate: (e){
-          print("onForcePressUpdate");
+          print("onLongPressMoveUpdate");
           hideKeyboard(context);
           barcodeFocus.requestFocus();
         },
         onLongPressStart: (e){
-          print("onForcePressUpdate");
+          print("onLongPressStart");
           hideKeyboard(context);
           barcodeFocus.requestFocus();
         },
         onLongPressUp: (){
-          print("onForcePressUpdate");
+          print("onLongPressUp");
           hideKeyboard(context);
           barcodeFocus.requestFocus();
         },
         onPanCancel: (){
-          print("onForcePressUpdate");
+          print("onPanCancel");
           hideKeyboard(context);
           barcodeFocus.requestFocus();
         },
         onPanDown: (e){
-          print("onForcePressUpdate");
+          print("onPanDown");
           hideKeyboard(context);
           barcodeFocus.requestFocus();
         },
         onPanEnd: (e){
-          print("onForcePressUpdate");
+          print("onPanEnd");
           hideKeyboard(context);
           barcodeFocus.requestFocus();
         },
         onPanStart: (e){
-          print("onForcePressUpdate");
+          print("onPanStart");
           hideKeyboard(context);
           barcodeFocus.requestFocus();
         },
         onPanUpdate: (e){
-          print("onForcePressUpdate");
+          print("onPanUpdate");
           hideKeyboard(context);
           barcodeFocus.requestFocus();
         },
@@ -335,7 +361,7 @@ class _ScanScreenState extends State<ScanScreen> {
                     minHeight: constraints.maxHeight,
                   ),
                   child: Center(
-                    child: Row(
+                    child: isShowImg?Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -349,16 +375,16 @@ class _ScanScreenState extends State<ScanScreen> {
                                   alignment: Alignment.centerLeft
                               )
                           ),
-                        ),
-                        // Container(height: MediaQuery.of(context).size.height/1,width: 1.0,color: Colors.white),
+                        ), // Container(
                         Container(
-                          margin: EdgeInsets.only(top:50.0),
+                          // margin: EdgeInsets.only(top:50.0),
                           child: Center(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text('SCAN YOUR ITEM', textAlign: TextAlign.center, style: TextStyle(fontSize:30.0,letterSpacing:5.0,color:Colors.white,fontWeight: FontWeight.bold)),
+                                SizedBox(height: 10,),
                                 Text('Dekatkan barcode ke scanner untuk', textAlign: TextAlign.center, style: TextStyle(fontSize:15.0,letterSpacing:5.0,color:Colors.white,fontWeight: FontWeight.bold)),
                                 Text('mendapatkan informasi harga dari barang tersebut', textAlign: TextAlign.center, style: TextStyle(fontSize:15.0,letterSpacing:5.0,color:Colors.white,fontWeight: FontWeight.bold)),
                                 Image.network('https://i.pinimg.com/originals/5e/2c/2c/5e2c2c13b52b2ae170c2f9d97156f880.gif',color: Colors.white,height: 50.0),
@@ -382,22 +408,90 @@ class _ScanScreenState extends State<ScanScreen> {
                                     ),
                                     child:TextFormField(
                                       cursorColor: Colors.grey[200],
-                                      style: TextStyle(fontSize:14,fontWeight: FontWeight.bold,color: Constant().mainColor),
+                                      // style: TextStyle(fontSize:14,fontWeight: FontWeight.bold,color: Constant().mainColor),
                                       controller: barcodeController,
                                       maxLines: 1,
                                       autofocus: true,
                                       showCursor: false,
                                       decoration: InputDecoration(
-                                        enabledBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(color: Constant().mainColor),
-                                        ),
-                                        focusedBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide.none,
-                                        ),
-                                        hintStyle: TextStyle(color: Constant().mainColor),
+                                        // enabledBorder: UnderlineInputBorder(
+                                        //   borderSide: BorderSide(color: Constant().mainColor),
+                                        // ),
+                                        // focusedBorder: UnderlineInputBorder(
+                                        //   borderSide: BorderSide.none,
+                                        // ),
+                                        // hintStyle: TextStyle(color: Constant().mainColor),
                                       ),
                                       keyboardType: TextInputType.text,
-                                      textInputAction: TextInputAction.next,
+                                      textInputAction: TextInputAction.done,
+                                      focusNode: barcodeFocus,
+                                      onFieldSubmitted: (e){
+                                        print("=================================== onFieldSubmitted : $e");
+                                        searchProduct(e);
+                                      },
+                                      // onChanged: (e){
+                                      //   print("=================================== onChanged : $e");
+                                      // },
+                                    )
+                                )
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ):Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+
+                        Container(
+                          // margin: EdgeInsets.only(top:50.0),
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text('SCAN YOUR ITEM', textAlign: TextAlign.center, style: TextStyle(fontSize:30.0,letterSpacing:5.0,color:Colors.white,fontWeight: FontWeight.bold)),
+                                SizedBox(height: 10,),
+                                Text('Dekatkan barcode ke scanner untuk', textAlign: TextAlign.center, style: TextStyle(fontSize:15.0,letterSpacing:5.0,color:Colors.white,fontWeight: FontWeight.bold)),
+                                Text('mendapatkan informasi harga dari barang tersebut', textAlign: TextAlign.center, style: TextStyle(fontSize:15.0,letterSpacing:5.0,color:Colors.white,fontWeight: FontWeight.bold)),
+                                Image.network('https://i.pinimg.com/originals/5e/2c/2c/5e2c2c13b52b2ae170c2f9d97156f880.gif',color: Colors.white,height: 50.0),
+                                SizedBox(height: 30.0),
+                                InkWell(
+                                  highlightColor: Colors.transparent,
+                                  splashColor: Colors.black,
+                                  borderRadius: BorderRadius.circular(35.0),
+                                  onLongPress: (){
+                                    // searchProduct("e");
+                                    scanQR();
+                                  },
+                                  child: Image.asset('${Constant().localAssets}scanner.png',height: 220,color: Colors.white),
+                                ),
+                                SizedBox(height: 20.0),
+                                Container(
+                                    width:400.0,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color:Constant().mainColor
+                                    ),
+                                    child:TextFormField(
+                                      cursorColor: Colors.grey[200],
+                                      // style: TextStyle(fontSize:14,fontWeight: FontWeight.bold,color: Constant().mainColor),
+                                      controller: barcodeController,
+                                      maxLines: 1,
+                                      autofocus: true,
+                                      showCursor: false,
+                                      decoration: InputDecoration(
+                                        // enabledBorder: UnderlineInputBorder(
+                                        //   borderSide: BorderSide(color: Constant().mainColor),
+                                        // ),
+                                        // focusedBorder: UnderlineInputBorder(
+                                        //   borderSide: BorderSide.none,
+                                        // ),
+                                        // hintStyle: TextStyle(color: Constant().mainColor),
+                                      ),
+                                      keyboardType: TextInputType.text,
+                                      textInputAction: TextInputAction.done,
                                       focusNode: barcodeFocus,
                                       onFieldSubmitted: (e){
                                         print("=================================== onFieldSubmitted : $e");
@@ -470,7 +564,7 @@ class _TimerModalState extends State<TimerModal> {
   Widget build(BuildContext context) {
     return Container(
       // color: Constant().mainColor,
-      height: MediaQuery.of(context).size.height/1.5,
+      height: MediaQuery.of(context).size.height/1.1,
       padding: EdgeInsets.only(top:10.0,left:0,right:0),
       child: Column(
         children: [
@@ -495,54 +589,28 @@ class _TimerModalState extends State<TimerModal> {
                 child: Center(child: Icon(Icons.close,color:Colors.grey[200])),
               ),
             ),
-            title: Text("Enter Timer (second)",style: TextStyle(color: Colors.grey[200],fontWeight: FontWeight.bold),),
+            title: InkWell(
+              onTap: ()=>handleTimer(text),
+              child: Text("Simpan",style: TextStyle(color: Colors.grey[200],fontWeight: FontWeight.bold),),
+            ),
           ),
           Divider(),
+          Text(
+            text,
+            style: Theme.of(context).textTheme.headline1,
+          ),
           Expanded(
             child: Center(
-              child: Column(
-              children: <Widget>[
-                Text(
-                  text,
-                  style: Theme.of(context).textTheme.headline1,
+              child: Container(
+                color: Colors.transparent,
+                child: VirtualKeyboard(
+                    textColor: Colors.white,
+                    type: VirtualKeyboardType.Numeric,
+                    onKeyPress: _onKeyPress
                 ),
-                Divider(),
-                Expanded(
-                  child: InkWell(
-                    onTap: (){
-                      if(text!=''){
-                        handleTimer(text);
-                      }
-                    },
-                    borderRadius: BorderRadius.circular(10),
-                    highlightColor: Colors.transparent,
-                    splashColor: Colors.black,
-                    child: Container(
-                      padding: EdgeInsets.only(top:20.0,bottom:20.0),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.grey[200]),
-                      ),
-                      child: Text('SAVE', textAlign: TextAlign.center, style: TextStyle(letterSpacing:5.0,color:Colors.white,fontWeight: FontWeight.bold),),
-                    )
-                  ),
-                ),
-                Container(
-                  color: Colors.transparent,
-                  child: VirtualKeyboard(
-                      height: 300,
-                      textColor: Colors.white,
-                      type: VirtualKeyboardType.Numeric,
-                      onKeyPress: _onKeyPress
-                  ),
-                )
-              ],
-            ),
+              ),
             )
           )
-
-
         ],
       ),
     );

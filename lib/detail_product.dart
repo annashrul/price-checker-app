@@ -105,33 +105,43 @@ class _DetailProductState extends State<DetailProduct> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Container(
-                    height: 400,
-                    width: 400,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: NetworkImage('${widget.data[0]['gambar']}'),
-                            fit: BoxFit.fitWidth,
-                            alignment: Alignment.topCenter
-                        )
-                    ),
-                  ),
-                  SizedBox(width: 20.0),
+                  // Container(
+                  //   // height: 400,
+                  //   // width: 400,
+                  //   decoration: BoxDecoration(
+                  //       image: DecorationImage(
+                  //           image: NetworkImage('${widget.data[0]['gambar']}'),
+                  //           fit: BoxFit.contain,
+                  //           alignment: Alignment.topCenter
+                  //       )
+                  //   ),
+                  // ),
+                  // SizedBox(width: 20.0),
                  Column(
                    mainAxisAlignment: MainAxisAlignment.start,
                    crossAxisAlignment: CrossAxisAlignment.start,
                    children: [
                      tempItem(context,"BARCODE BARANG", widget.data[0]["tambahan"][0]['barcode']),
                      Divider(),
-                     tempItem(context,"KODE BARANG", widget.data[0]["tambahan"][0]['kd_brg']),
-                     Divider(),
+                     // tempItem(context,"KODE BARANG", widget.data[0]["tambahan"][0]['kd_brg']),
+                     // Divider(),
                      tempItem(context,"NAMA BARANG", widget.data[0]['nm_brg']),
                      Divider(),
                      tempItem(context,"SATUAN BARANG", widget.data[0]["tambahan"][0]['satuan']),
                      Divider(),
-                     tempItem(context,"HARGA BARANG","Rp ${WidgetHelper().formatter.format(int.parse( widget.data[0]["tambahan"][0]['harga']))}.-"),
-                     Divider(),
-                     tempItem(context,"KELOMPOK BARANG",widget.data[0]['kel_brg']),
+                     Row(
+                       children: [
+                         Container(
+                           width: 300,
+                           child: Text("HARGA BARANG",style: TextStyle(letterSpacing:3.0,color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20)),
+                         ),
+                         Text(":",style: TextStyle(letterSpacing:3.0,color: Colors.white,fontSize:20)),
+                         Text("Rp ${WidgetHelper().formatter.format(int.parse( widget.data[0]["tambahan"][0]['harga']))}.-",style: TextStyle(letterSpacing:3.0,color: Colors.white,fontSize:40)),
+                       ],
+                     )
+                     // tempItem(context,"HARGA BARANG","Rp ${WidgetHelper().formatter.format(int.parse( widget.data[0]["tambahan"][0]['harga']))}.-"),
+                     // Divider(),
+                     // tempItem(context,"KELOMPOK BARANG",widget.data[0]['kel_brg']),
                    ],
                  )
                 ],
@@ -152,7 +162,7 @@ class _DetailProductState extends State<DetailProduct> {
           width: 300,
           child: Text("$title",style: TextStyle(letterSpacing:3.0,color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20)),
         ),
-        Text(": $desc",style: TextStyle(letterSpacing:3.0,color: Colors.white,fontSize: 20)),
+        Text(": $desc",style: TextStyle(letterSpacing:3.0,color: Colors.white,fontSize: title=='HARGA BARANG'?34:20)),
       ],
     );
   }
