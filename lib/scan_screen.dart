@@ -228,8 +228,8 @@ class _ScanScreenState extends State<ScanScreen> {
     // TODO: implement initState
     super.initState();
     loadUser();
-    SystemChannels.textInput.invokeMethod('TextInput.hide');
-    barcodeFocus.requestFocus();
+    // SystemChannels.textInput.invokeMethod('TextInput.hide');
+    // barcodeFocus.requestFocus();
 
     super.initState();
   }
@@ -241,9 +241,9 @@ class _ScanScreenState extends State<ScanScreen> {
   @override
   Widget build(BuildContext context) {
     PopupMenu.context = context;
-    hideKeyboard(context);
-
-    // barcodeFocus.requestFocus();
+    // hideKeyboard(context);
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
+    barcodeFocus.requestFocus();
     // hideKeyboard(context);
 
 
