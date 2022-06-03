@@ -55,7 +55,7 @@ class _DetailProductState extends State<DetailProduct> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    // timer.cancel();
+    timer.cancel();
   }
 
   @override
