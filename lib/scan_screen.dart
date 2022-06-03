@@ -147,7 +147,7 @@ class _ScanScreenState extends State<ScanScreen> {
     print('menu is ${isShow ? 'showing' : 'closed'}');
   }
 
-  bool isShowImg=true;
+  bool isShowImg=false;
   void onClickMenu(MenuItemProvider item)async {
     if(item.menuTitle=='Setting'){
       // barcodeFocus.unfocus();
@@ -223,13 +223,10 @@ class _ScanScreenState extends State<ScanScreen> {
     // TODO: implement initState
     super.initState();
     loadUser();
-    Wakelock.enable();
-    // SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    // print("ANYING ${prefs.getBool("isShowImg")}");
     SystemChannels.textInput.invokeMethod('TextInput.hide');
     barcodeFocus.requestFocus();
-    // WidgetsBinding.instance.addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+
+    super.initState();
   }
   Future<void> _refresh() {
     return loadUser();
@@ -242,6 +239,9 @@ class _ScanScreenState extends State<ScanScreen> {
     hideKeyboard(context);
 
     // barcodeFocus.requestFocus();
+    // hideKeyboard(context);
+
+
 
     return Scaffold(
       appBar: AppBar(
@@ -271,18 +271,20 @@ class _ScanScreenState extends State<ScanScreen> {
       // resizeToAvoidBottomPadding: true,
       resizeToAvoidBottomInset: true,
       body:GestureDetector(
+        behavior: HitTestBehavior.opaque,
+
         // behavior: HitTestBehavior.translucent,
         onTap: (){
           print("onTap");
           hideKeyboard(context);
           barcodeFocus.requestFocus();
-          SystemChannels.textInput.invokeMethod('TextInput.hide');
+          // SystemChannels.textInput.invokeMethod('TextInput.hide');
         },
         onDoubleTap: (){
           print("onDoubleTap");
           hideKeyboard(context);
           barcodeFocus.requestFocus();
-          SystemChannels.textInput.invokeMethod('TextInput.hide');
+          // SystemChannels.textInput.invokeMethod('TextInput.hide');
         },
         // onTapDown: (e){
         //   print("onTapDown");
@@ -393,6 +395,7 @@ class _ScanScreenState extends State<ScanScreen> {
         child: RefreshIndicator(
           child:  LayoutBuilder(
             builder: (context, constraints) => ListView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               children: [
                 Container(
                   padding: const EdgeInsets.all(20.0),
@@ -516,6 +519,8 @@ class _ScanScreenState extends State<ScanScreen> {
                                         color:Constant().mainColor
                                     ),
                                     child:TextFormField(
+                                      // onTap: () => FocusScope.of(context).unfocus(),
+
                                       cursorColor: Colors.grey[200],
                                       // style: TextStyle(fontSize:14,fontWeight: FontWeight.bold,color: Constant().mainColor),
                                       controller: barcodeController,
@@ -523,14 +528,17 @@ class _ScanScreenState extends State<ScanScreen> {
                                       autofocus: true,
                                       showCursor: false,
                                       decoration: new InputDecoration(
-                                        // fillColor: Colors.white,
-                                        border: InputBorder.none,
+                                        // enabledBorder: UnderlineInputBorder(
+                                        //   borderSide: BorderSide(color: Colors.transparent),
+                                        // ),
+
+                                        fillColor: Colors.transparent,
+                                        // border: InputBorder.none,
                                         focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                          // borderRadius:BorderRadius.all(Radius.circular(10)),
                                             borderSide: BorderSide(color: Colors.white)),
                                         filled: true,
-                                        contentPadding:
-                                        EdgeInsets.only(bottom: 10.0, left: 10.0, right: 10.0),
+                                        // contentPadding: EdgeInsets.only(bottom: 10.0, left: 10.0, right: 10.0),
                                         // labelText: widget.title,
                                       ),
                                       // decoration: InputDecoration(
