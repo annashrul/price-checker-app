@@ -209,12 +209,17 @@ class _ScanScreenState extends State<ScanScreen> {
   final repo = Repository();
   Future loadUser()async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    print("ANYING ${prefs.getBool("isShowImg")}");
+    var logo=prefs.getBool("isShowImg");
+    if(logo!=null){
+      print("ANYING ${prefs.getBool("isShowImg")}");
+      isShowImg=logo;
+    }else{
+      isShowImg=false;
+    }
     final foto  = await repo.getDataUser("logo");
     print(foto);
     setState(() {
       img = foto;
-      isShowImg=prefs.getBool("isShowImg");
     });
     barcodeFocus.requestFocus();
   }
